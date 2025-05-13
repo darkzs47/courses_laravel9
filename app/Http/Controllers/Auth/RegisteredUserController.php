@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Http\Requests\RegisterRequest;
 
 class RegisteredUserController extends Controller
 {
@@ -29,19 +30,24 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(RegisterRequest $request): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:'.User::class,
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        $data = $request->validated();
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        $data['password'] = Hash::make($data['password']);
+
+        $user = User::create($data);
+
+        if ($request->hasFile('ava') && $request->file('ava')->isValid()) {
+            $image = $request->file('ava');
+
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+
+            $image->move(public_path('images'), $imageName);
+
+            $user->image = $imageName;
+            $user->save();
+        }
 
         event(new Registered($user));
 
