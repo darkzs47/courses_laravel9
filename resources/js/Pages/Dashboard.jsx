@@ -3,14 +3,14 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head} from '@inertiajs/react';
 import {AuthProvider} from "@/Context/AuthContext";
 
-export default function Dashboard({ auth }) {
+export default function Dashboard({auth}) {
 
     return (
         <AuthProvider auth={auth}>
+            <Head title="Админ"/>
             <AuthenticatedLayout
                 header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Языковая школа LINGVO</h2>}
             >
-                <Head title="Админ"/>
             </AuthenticatedLayout>
         </AuthProvider>
     );

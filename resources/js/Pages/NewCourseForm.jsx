@@ -1,7 +1,7 @@
 import React from 'react';
 import Navigation from "@/Layouts/Navigation";
 import Footer from "@/Layouts/Footer";
-import {useForm} from "@inertiajs/react";
+import {Head, useForm} from "@inertiajs/react";
 import InputLabel from "@/Components/InputLabel";
 import InputError from "@/Components/InputError";
 import TextInput from "@/Components/TextInput";
@@ -9,7 +9,9 @@ import SelectInput from "@/Components/SelectInput";
 import TextAreaInput from "@/Components/TextAreaInput";
 import {AuthProvider} from "@/Context/AuthContext";
 
-export default function NewCourseForm({ auth }) {
+export default function NewCourseForm({auth, languages}) {
+
+    console.log(languages)
 
     const {data, setData, post, processing, errors, reset} = useForm({
         name: '',
@@ -34,6 +36,7 @@ export default function NewCourseForm({ auth }) {
 
     return (
         <AuthProvider auth={auth}>
+            <Head title="Добавление курса"/>
             <Navigation/>
 
             <div className="max-w-2xl mx-auto bg-white shadow p-6 rounded-lg mt-6">
@@ -41,7 +44,7 @@ export default function NewCourseForm({ auth }) {
 
                 <form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-4">
                     <div>
-                        <label className="block font-medium" htmlFor="courseName">Название курса</label>
+                        <InputLabel className="block font-medium" htmlFor="courseName" value="Название курса"/>
                         <TextInput
                             id="courseName"
                             name="name"
@@ -49,68 +52,71 @@ export default function NewCourseForm({ auth }) {
                             onChange={handleChange}
                             className="w-full mt-1"
                         />
-                        {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+                        <InputError message={errors.name} className="mt-2"/>
                     </div>
 
                     <div>
-                        <label className="block font-medium">Описание</label>
+                        <InputLabel className="block font-medium" htmlFor="description" value="Описание"/>
                         <TextAreaInput
+                            id="description"
                             name="description"
                             value={data.description}
                             onChange={handleChange}
                             className="w-full mt-1"
                         />
-                        {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
+                        <InputError message={errors.description} className="mt-2"/>
                     </div>
 
                     <div>
-                        <label className="block font-medium">Язык</label>
+                        <InputLabel className="block font-medium" htmlFor="language_id" value="Язык"/>
                         <SelectInput
+                            id="language_id"
                             name="language_id"
                             value={data.language_id}
                             onChange={handleChange}
-                            options={[
-                                {value: '1', label: 'Английский'},
-                                {value: '2', label: 'Китайский'},
-                            ]}
+                            options={languages}
                         />
-                        {errors.language_id && <p className="text-red-500 text-sm">{errors.language_id}</p>}
+                        <InputError message={errors.language_id} className="mt-2"/>
                     </div>
 
                     <div>
-                        <label className="block font-medium">Макс. количество участников</label>
+                        <InputLabel className="block font-medium" htmlFor="capacity"
+                                    value="Макс. количество участников"/>
                         <TextInput
+                            id="capacity"
                             type="number"
                             name="capacity"
                             value={data.capacity}
                             onChange={handleChange}
                             className="w-full mt-1"
                         />
-                        {errors.capacity && <p className="text-red-500 text-sm">{errors.capacity}</p>}
+                        <InputError message={errors.capacity} className="mt-2"/>
                     </div>
 
                     <div>
-                        <label className="block font-medium">Дата начала</label>
+                        <InputLabel className="block font-medium" htmlFor="datetime-local" value="Дата начала"/>
                         <TextInput
+                            id="datetime-local"
                             type="datetime-local"
                             name="start_datetime"
                             value={data.start_datetime}
                             onChange={handleChange}
                             className="w-full mt-1"
                         />
-                        {errors.start_datetime && <p className="text-red-500 text-sm">{errors.start_datetime}</p>}
+                        <InputError message={errors.start_datetime} className="mt-2"/>
                     </div>
 
                     <div>
-                        <label className="block font-medium">Изображение</label>
+                        <InputLabel className="block font-medium" htmlFor="file" value="Изображение"/>
                         <input
+                            id="file"
                             type="file"
                             name="image"
                             accept="image/*"
                             onChange={handleChange}
                             className="mt-1"
                         />
-                        {errors.image && <p className="text-red-500 text-sm">{errors.image}</p>}
+                        <InputError message={errors.image} className="mt-2"/>
                     </div>
 
                     <div className="flex justify-end">
