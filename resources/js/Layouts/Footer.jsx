@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaTwitter, FaFacebookF, FaPinterestP, FaInstagram } from 'react-icons/fa';
 
-export default function Footer() {
+const Footer = () => {
     return (
         <footer>
             <div className="flex justify-center py-4">
@@ -46,3 +46,5 @@ export default function Footer() {
         </footer>
     );
 }
+
+export default React.memo(Footer);

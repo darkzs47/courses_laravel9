@@ -4,13 +4,18 @@ import Navigation from "@/Layouts/Navigation";
 import Footer from "@/Layouts/Footer";
 import {Head, router} from "@inertiajs/react";
 import dayjs from "dayjs";
-import {useState} from "react";
 
 export default function CourseFullInfo({auth, languages, course, registrationsCount}) {
+
     const courseCapacity = course.capacity;
+
     const handleRegister = () => {
         router.post(route('courses.register', {courseId: course.id, userId: auth.user.id}));
     };
+
+    const handleAdminRegistrations = () => {
+        router.get(route('admin.registrations', {id: course.id}));
+    }
 
     return (
         <AuthProvider auth={auth}>
@@ -39,12 +44,11 @@ export default function CourseFullInfo({auth, languages, course, registrationsCo
                                     {course.description}
                                 </p>
                             </div>
-                            {/*{route('course.enrollments', course.id)}*/}
                             <div className="mt-6 text-center">
                                 {auth.user.role === 'admin' ? (
-                                    <a href="#"
+                                    <button onClick={handleAdminRegistrations}
                                        className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow"
-                                    > Посмотреть записи на курс</a>
+                                    > Посмотреть записи на курс</button>
                                 ) : (
                                     registrationsCount < courseCapacity ? (
                                         dayjs().isBefore(dayjs(course.start_datetime)) ?

@@ -5,6 +5,7 @@ import Footer from "@/Layouts/Footer";
 import {Head, router} from "@inertiajs/react";
 
 export default function AllRegistrations({auth, languages, registrations, registrationsCount}){
+    console.log(registrationsCount)
 
     const handleDelete = (registrationId) => {
         if (confirm('Вы уверены, что хотите удалить запись?')) {
@@ -19,15 +20,16 @@ export default function AllRegistrations({auth, languages, registrations, regist
                     <Navigation/>
                     <main>
                         <div className="max-w-5xl mx-auto py-10 px-4">
-                            {registrations.map((registration) => (
+                            <h1 className="text-3xl font-bold text-center mb-8">{registrations[0].course.name}</h1>
+                            {registrations.length > 0 ? registrations.map((registration) => (
                                 <div
                                     key={registration.id}
                                     className="flex mb-6 border border-gray-300 rounded-lg p-4 shadow-md bg-white hover:shadow-lg transition-shadow"
                                 >
+
                                     <div className="flex-1">
-                                        <h2 className="text-xl font-bold text-gray-800">{registration.course.name}</h2>
                                         <p className="text-gray-600">
-                                            Имя студента: <b>{registration.user.name}</b>
+                                            Имя пользователя: <b>{registration.user.name}</b>
                                         </p>
                                         <p className="text-gray-600">
                                             Дата начала
@@ -38,7 +40,7 @@ export default function AllRegistrations({auth, languages, registrations, regist
                                         </p>
                                         <p className="text-gray-600">
                                             Текущее количество
-                                            участников: <b>{registrationsCount[registration['course_id']].registrationsCount}</b>
+                                            участников: <b>{registrationsCount[registration.course.id]}</b>
                                         </p>
                                     </div>
                                     <button
@@ -48,9 +50,7 @@ export default function AllRegistrations({auth, languages, registrations, regist
                                         Удалить запись
                                     </button>
                                 </div>
-
-
-                            ))}
+                            )) : <p className="text-center text-gray-500">На курс нет записей.</p>}
                         </div>
                     </main>
                     <Footer/>

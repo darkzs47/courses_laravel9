@@ -21,7 +21,7 @@ class CourseController extends Controller
         );
     }
 
-    public function ShowCourses()
+    public function ShowAdmin()
     {
         $courses = Course::withCount('registrations')->get();
         $languages = Language::all();
@@ -31,7 +31,7 @@ class CourseController extends Controller
             ]);
     }
 
-    public function GetLanguage($id)
+    public function ShowCoursesByLanguage($id)
     {
         $coursesByLanguage = Course::where('language_id', $id)->get();
         $currentLanguage = Language::where('id', $id)->first();

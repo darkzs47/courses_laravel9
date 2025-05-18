@@ -1,7 +1,8 @@
+import React from 'react';
 import {Link, router} from "@inertiajs/react";
 import {useAuth} from "@/Context/AuthContext";
 
-export default function CourseCard({course}) {
+const CourseCard = ({course}) => {
     const auth = useAuth();
 
     const handleDelete = (id) => {
@@ -38,3 +39,5 @@ export default function CourseCard({course}) {
         </>
     )
 }
+
+export default React.memo(CourseCard);

@@ -28,11 +28,13 @@ class RegistrationController extends Controller
         return Inertia::location(route('dashboard'));
     }
 
-    public function ShowUserRegistrations($userId)
+    public function ShowUserRegistrations()
     {
+        $id = auth()->id();
+
         $languages = Language::all();
 
-        $registrations = Registration::where('user_id', $userId)
+        $registrations = Registration::where('user_id', $id)
             ->with('course')
             ->get();
 
@@ -51,19 +53,22 @@ class RegistrationController extends Controller
         return redirect()->back();
     }
 
-    public function ShowAllRegistrations()
+    public function ShowAllRegistrations($id = null)
     {
-        $registrationsCount = Registration::with(['course', 'user'])
-            ->get()
-            ->groupBy('course_id')
-            ->map(function ($registrationsGroup) {
-                return [
-                    'registrationsCount' => $registrationsGroup->count(),
-                ];
-            });
-
-        $registrations = Registration::with(['course', 'user'])->get();
         $languages = Language::all();
+
+        $query = Registration::with(['course', 'user']);
+
+        if ($id) {
+            $query->where('course_id', $id);
+        }
+
+        $registrations = $query->get();
+
+        $registrationsCount = Registration::select('course_id')
+            ->selectRaw('COUNT(*) as registrationsCount')
+            ->groupBy('course_id')
+            ->pluck('registrationsCount', 'course_id');
 
         return Inertia::render('AllRegistrations', [
             'registrations' => $registrations,
@@ -72,7 +77,7 @@ class RegistrationController extends Controller
         ]);
     }
 
-    public function delete($id)
+    public function Delete($id)
     {
         $registration = Registration::findOrFail($id);
 

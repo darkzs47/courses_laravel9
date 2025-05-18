@@ -7,10 +7,10 @@ import {Head} from "@inertiajs/react";
 import dayjs from 'dayjs';
 import CourseCard from "@/Layouts/CourseCard";
 
-
 export default function CoursesByLanguage({auth, languages, coursesByLanguage, currentLanguage}) {
 
     const language = currentLanguage.language;
+
     return (
         <AuthProvider auth={auth}>
             <LanguageProvider value={languages}>
@@ -28,7 +28,7 @@ export default function CoursesByLanguage({auth, languages, coursesByLanguage, c
                                 <div className="w-full lg:w-2/3 space-y-8">
                                     {coursesByLanguage.map((course, index) => (
                                         <article
-                                            key={index}
+                                            key={course.id}
                                             className="flex gap-4 border border-gray-300 rounded-lg p-4 shadow-md bg-white hover:shadow-lg transition-shadow"
                                         >
                                             <CourseCard course={course}/>

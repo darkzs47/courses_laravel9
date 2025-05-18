@@ -7,7 +7,6 @@ import Registration from "@/Layouts/Registration";
 
 export default function Registrations({auth, languages, registrations}){
 
-
     return (
         <>
             <AuthProvider auth={auth}>

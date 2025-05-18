@@ -11,7 +11,7 @@ import {AuthProvider} from "@/Context/AuthContext";
 import LanguageProvider from "@/Providers/LanguageProvider";
 
 export default function NewCourseForm({auth, languages}) {
-    const {data, setData, post, processing, errors, reset} = useForm({
+    const {data, setData, post, processing, errors} = useForm({
         name: '',
         description: '',
         language_id: '',
