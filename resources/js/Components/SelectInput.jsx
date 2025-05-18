@@ -20,9 +20,12 @@ export default forwardRef(function Select(
                     }
                     ref={select}
                 >
+                    <option key={-1} value="">
+                        Язык
+                    </option>
                     {options.map((option, index) => (
-                        <option key={index} value={option.value}>
-                            {option.label}
+                        <option key={index} value={option.id}>
+                            {option.language}
                         </option>
                     ))}
                 </select>

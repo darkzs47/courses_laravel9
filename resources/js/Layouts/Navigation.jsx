@@ -1,10 +1,13 @@
 import NavLink from "@/Components/NavLink";
 import Dropdown from "@/Components/Dropdown";
 import {useAuth} from "@/Context/AuthContext";
+import {useLanguages} from "@/Providers/LanguageProvider";
+
 export default function Navigation() {
     const auth = useAuth();
-
+    const languages = useLanguages();
     return (
+
         <>
             <nav className="bg-white border-b border-gray-100 shadow">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -12,20 +15,17 @@ export default function Navigation() {
                         <div className="flex">
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Главная {/*index.html Передавать курсы пропсом */}
+                                    Главная
                                 </NavLink>
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Английский
-                                </NavLink>
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Французский
-                                </NavLink>
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Немецкий
-                                </NavLink>
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Китайский
-                                </NavLink>
+                                {languages.map(lang => (
+                                    <NavLink
+                                        key={lang.id}
+                                        href={route('courses.byLanguage', lang.id)}
+                                        active={route().current('courses.byLanguage') && Number(route().params.id) === lang.id}
+                                    >
+                                        {lang.language}
+                                    </NavLink>
+                                ))}
                             </div>
                         </div>
 
@@ -58,7 +58,7 @@ export default function Navigation() {
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
-                                        <Dropdown.Link href={route('profile.edit')}>Профиль</Dropdown.Link>
+                                        <Dropdown.Link href={route('user.registrations', { id: auth.user.id })}>Мои записи</Dropdown.Link>
                                         <Dropdown.Link href={route('logout')} method="post" as="button">
                                             Выйти
                                         </Dropdown.Link>
