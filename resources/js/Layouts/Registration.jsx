@@ -1,6 +1,7 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import {router} from "@inertiajs/react"
+import {XCircle} from "lucide-react";
 
 const Registration = ({reg}) => {
     const courseStart = dayjs(reg.course.start_datetime);
@@ -36,12 +37,13 @@ const Registration = ({reg}) => {
                 <button
                     onClick={() => handleCancel(reg.id)}
                     disabled={isTooLate}
-                    className={`${
-                        isTooLate
-                            ? 'bg-gray-400 cursor-not-allowed'
-                            : 'bg-red-500 hover:bg-red-600'
-                    } text-white font-semibold px-4 py-2 rounded shadow`}
+                    className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg shadow-sm font-medium transition-colors duration-150
+    ${isTooLate
+                        ? 'bg-gray-300 text-gray-600 cursor-not-allowed'
+                        : 'bg-red-600 hover:bg-red-700 text-white'}
+  `}
                 >
+                    <XCircle className="w-5 h-5"/>
                     {courseStarted ? 'Курс уже начался' : 'Отменить запись'}
                 </button>
             </div>

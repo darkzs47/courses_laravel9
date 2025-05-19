@@ -9,6 +9,7 @@ import SelectInput from "@/Components/SelectInput";
 import TextAreaInput from "@/Components/TextAreaInput";
 import {AuthProvider} from "@/Context/AuthContext";
 import LanguageProvider from "@/Providers/LanguageProvider";
+import {PlusCircle} from "lucide-react";
 
 export default function NewCourseForm({auth, languages}) {
     const {data, setData, post, processing, errors} = useForm({
@@ -121,8 +122,9 @@ export default function NewCourseForm({auth, languages}) {
                             <div className="flex justify-end">
                                 <button
                                     type="submit"
-                                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                                    className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-lg shadow-sm transition-all duration-150"
                                 >
+                                    <PlusCircle className="w-5 h-5"/>
                                     Добавить курс
                                 </button>
                             </div>

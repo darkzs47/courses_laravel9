@@ -2,9 +2,7 @@ import React from 'react';
 import {Link} from "@inertiajs/react";
 import CourseCard from "@/Layouts/CourseCard";
 import {useAuth} from "@/Context/AuthContext";
-import {useState} from "react";
-import dayjs from "dayjs";
-import CourseFilters from '@/Layouts/CourseFilters';
+import AdminLinks from "@/Layouts/AdminLinks";
 
 const AllCourses = ({courses}) => {
     const auth = useAuth();
@@ -22,20 +20,10 @@ const AllCourses = ({courses}) => {
                                 >
                                     <CourseCard course={course}/>
                                 </article>
-                            )) : <p>Нет курсов с таким фильтром</p>}
+                            )) : <p className="w-full">Нет курсов с таким фильтром</p>}
                         </div>
                         {auth.user.role === 'admin' && (
-                            <div className="w-full lg:w-1/3">
-                                <div className="bg-gray-100 p-4 rounded shadow">
-                                    <h3 className="text-lg font-bold mb-4">Админ-панель</h3>
-                                    <ul className="space-y-2">
-                                        <li>
-                                            <Link href={route('add.course')}>Добавить курс</Link> <br/>
-                                            <Link href={route('user.registrations')}>Записи на курсы</Link>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <AdminLinks/>
                         )}
                     </div>
                 </div>

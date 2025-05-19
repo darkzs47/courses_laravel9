@@ -73,21 +73,21 @@ class CourseController extends Controller
             $course->save();
         }
 
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')->with('message', 'CourseAddSuccessfully');
     }
 
-    public function destroy($id)
+    public function Destroy($id)
     {
         $course = Course::findOrFail($id);
 
         $registrationsCount = Registration::where('course_id', $course->id)->count();
 
         if ($registrationsCount > 0) {
-            return redirect()->route('dashboard');
+            return redirect()->route('dashboard')->with('message', 'CourseDeleteError');
         }
 
         $course->delete();
 
-        return redirect()->route('dashboard')->with('success', 'Курс успешно удален.');
+        return redirect()->route('dashboard')->with('message', 'CourseDeleteSuccessfully');
     }
 }

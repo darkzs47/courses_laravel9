@@ -17,7 +17,7 @@ class RegistrationController extends Controller
             ->exists();
 
         if ($existingRegistration) {
-            return redirect()->route('course.show', $courseId);
+            return redirect()->route('course.show', $courseId)->with('message', 'RegisterExist');
         }
 
         Registration::create([
@@ -25,7 +25,7 @@ class RegistrationController extends Controller
             'user_id' => $userId,
         ]);
 
-        return Inertia::location(route('dashboard'));
+        return Inertia::location(route('dashboard', ['message' => 'RegisterSuccess']));
     }
 
     public function ShowUserRegistrations()
@@ -39,7 +39,7 @@ class RegistrationController extends Controller
             ->get();
 
 
-        return Inertia::render('Registrations', [
+        return Inertia::render('UserRegistrations', [
             'registrations' => $registrations,
             'languages' => $languages,
         ]);
@@ -50,7 +50,7 @@ class RegistrationController extends Controller
         $registration = Registration::findOrFail($id);
         $registration->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('message', 'RegistrationCancelSuccessfully');
     }
 
     public function ShowAllRegistrations($id = null)
@@ -83,6 +83,6 @@ class RegistrationController extends Controller
 
         $registration->delete();
 
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')->with('message', 'RegistrationDeleteSuccessfully');
     }
 }

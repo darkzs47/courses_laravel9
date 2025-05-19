@@ -4,6 +4,7 @@ import Navigation from "@/Layouts/Navigation";
 import Footer from "@/Layouts/Footer";
 import {Head, router} from "@inertiajs/react";
 import dayjs from "dayjs";
+import {Eye, CheckCircle, Lock, CalendarX} from "lucide-react";
 
 export default function CourseFullInfo({auth, languages, course, registrationsCount}) {
 
@@ -46,32 +47,40 @@ export default function CourseFullInfo({auth, languages, course, registrationsCo
                             </div>
                             <div className="mt-6 text-center">
                                 {auth.user.role === 'admin' ? (
-                                    <button onClick={handleAdminRegistrations}
-                                       className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow"
-                                    > Посмотреть записи на курс</button>
-                                ) : (
-                                    registrationsCount < courseCapacity ? (
-                                        dayjs().isBefore(dayjs(course.start_datetime)) ?
-                                            (<button
-                                                disabled={false}
-                                                onClick={handleRegister}
-                                                className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow"
-                                            >
-                                                Записаться
-                                            </button>) : (<button
-                                                disabled={true}
-                                                onClick={handleRegister}
-                                                className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow disabled:bg-gray-400 disabled:cursor-not-allowed disabled:text-gray-600"
-                                            >
-                                                Курс начался
-                                            </button>)) : (<button
-                                                disabled={true}
-                                                onClick={handleRegister}
-                                                className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow disabled:bg-gray-400 disabled:cursor-not-allowed disabled:text-gray-600"
+                                    <button
+                                        onClick={handleAdminRegistrations}
+                                        className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-lg shadow-sm transition-all duration-150"
                                     >
-                                                Мест нет
-                                            </button>)
-                                    )}
+                                        <Eye className="w-5 h-5"/>
+                                        Посмотреть записи на курс
+                                    </button>
+                                ) : registrationsCount < courseCapacity ? (
+                                    dayjs().isBefore(dayjs(course.start_datetime)) ? (
+                                        <button
+                                            onClick={handleRegister}
+                                            className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-lg shadow-sm transition-all duration-150"
+                                        >
+                                            <CheckCircle className="w-5 h-5"/>
+                                            Записаться
+                                        </button>
+                                    ) : (
+                                        <button
+                                            disabled
+                                            className="inline-flex items-center gap-2 bg-gray-300 text-gray-600 font-medium px-4 py-2 rounded-lg shadow-sm cursor-not-allowed"
+                                        >
+                                            <CalendarX className="w-5 h-5"/>
+                                            Курс начался
+                                        </button>
+                                    )
+                                ) : (
+                                    <button
+                                        disabled
+                                        className="inline-flex items-center gap-2 bg-gray-300 text-gray-600 font-medium px-4 py-2 rounded-lg shadow-sm cursor-not-allowed"
+                                    >
+                                        <Lock className="w-5 h-5"/>
+                                        Мест нет
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>

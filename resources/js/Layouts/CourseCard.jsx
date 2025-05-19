@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link, router} from "@inertiajs/react";
 import {useAuth} from "@/Context/AuthContext";
+import {Trash2} from "lucide-react";
 
 const CourseCard = ({course}) => {
     const auth = useAuth();
@@ -28,12 +29,15 @@ const CourseCard = ({course}) => {
                 </Link>
                 <p className="mb-2 text-gray-600">{course.description}</p>
                 {auth.user.role === 'admin' && (
-                    <button
-                        onClick={() => handleDelete(course.id)}
-                        className="text-red-600 hover:underline"
-                    >
-                        Удалить
-                    </button>
+                    <div className="ml-[28rem]">
+                        <button
+                            onClick={() => handleDelete(course.id)}
+                            className="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700 transition duration-150 ease-in-out"
+                        >
+                            <Trash2 className="w-5 h-5 mr-2"/>
+                            Удалить
+                        </button>
+                    </div>
                 )}
             </div>
         </>

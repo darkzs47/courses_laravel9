@@ -5,7 +5,7 @@ import Footer from "@/Layouts/Footer";
 import {Head} from "@inertiajs/react";
 import Registration from "@/Layouts/Registration";
 
-export default function Registrations({auth, languages, registrations}){
+export default function UserRegistrations({auth, languages, registrations}){
 
     return (
         <>
