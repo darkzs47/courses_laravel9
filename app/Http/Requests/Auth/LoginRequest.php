@@ -28,6 +28,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'email' => ['required', 'string', 'email'],
+            "login" => ['required', 'string'],
             'password' => ['required', 'string'],
         ];
     }
@@ -37,15 +38,25 @@ class LoginRequest extends FormRequest
      *
      * @throws \Illuminate\Validation\ValidationException
      */
+
+    public function messages()
+    {
+        return [
+          'email.required' => 'Введите email',
+          'login.required' =>  'Введите логин',
+          'password.required' => 'Введите пароль'
+        ];
+    }
+
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        if (! Auth::attempt($this->only('email', 'password') + ['login' => $this->login], $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => 'Неверные данные',
             ]);
         }
 
