@@ -58,9 +58,8 @@ export default function Navigation() {
                                 </Dropdown.Trigger>
 
                                 <Dropdown.Content>
-                                    {auth.user.role === 'admin' ?
-                                        <Dropdown.Link href={route('admin.registrations')}>Записи на курсы</Dropdown.Link>
-                                    : <Dropdown.Link href={route('user.registrations')}>Мои записи</Dropdown.Link>}
+                                    {auth.user.role !== 'admin' &&
+                                        <Dropdown.Link href={route('user.registrations')}>Мои записи</Dropdown.Link>}
 
                                     <Dropdown.Link href={route('logout')} method="post" as="button">
                                         Выйти

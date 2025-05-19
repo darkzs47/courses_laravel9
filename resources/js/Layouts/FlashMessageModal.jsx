@@ -2,15 +2,18 @@ import React from 'react';
 import {Dialog, Transition} from "@headlessui/react";
 import {Fragment, useState, useEffect} from "react";
 import {usePage} from '@inertiajs/react';
+import messages from "@/messages";
 
 const FlashMessageModal = () => {
     const { props } = usePage()
     const [isOpen, setIsOpen] = useState(false)
-    const message = props.flash
+    const messageKey = props.flash
+
+    const message = messageKey ? messages[messageKey] || messageKey : null;
 
     useEffect(() => {
-        if (message) setIsOpen(true)
-    }, [message])
+        if (messageKey) setIsOpen(true)
+    }, [messageKey])
 
     function closeModal() {
         setIsOpen(false)
