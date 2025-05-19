@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Footer from "@/Layouts/Footer";
 import AllCourses from "@/Layouts/AllCourses";
 import Navigation from "@/Layouts/Navigation";
-import CourseFilters from "@/Layouts/CourseFilters";
+import CourseFilters from "@/Components/CourseFilters";
 import dayjs from "dayjs";
 
 const Authenticated = ({ header, courses }) => {

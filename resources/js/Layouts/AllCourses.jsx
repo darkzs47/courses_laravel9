@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from "@inertiajs/react";
-import CourseCard from "@/Layouts/CourseCard";
+import CourseCard from "@/Components/CourseCard";
 import {useAuth} from "@/Context/AuthContext";
 import AdminLinks from "@/Layouts/AdminLinks";
 

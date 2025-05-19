@@ -6,7 +6,7 @@ import {Head, router} from "@inertiajs/react";
 import dayjs from "dayjs";
 import {Eye, CheckCircle, Lock, CalendarX} from "lucide-react";
 
-export default function CourseFullInfo({auth, languages, course, registrationsCount}) {
+export default function CourseFullInfo({auth, languages, course, registrationsCount, registerExists}) {
 
     const courseCapacity = course.capacity;
 
@@ -54,8 +54,17 @@ export default function CourseFullInfo({auth, languages, course, registrationsCo
                                         <Eye className="w-5 h-5"/>
                                         Посмотреть записи на курс
                                     </button>
-                                ) : registrationsCount < courseCapacity ? (
-                                    dayjs().isBefore(dayjs(course.start_datetime)) ? (
+                                ) : registerExists ? (
+                                    <button
+                                        type="button"
+                                        disabled
+                                        className="inline-flex items-center gap-2 bg-gray-100 text-gray-500 font-medium px-4 py-2 rounded-lg shadow-sm border border-gray-300 cursor-not-allowed"
+                                    >
+                                        <CheckCircle className="w-5 h-5 text-green-500" />
+                                        Уже записаны
+                                    </button>
+                                ) : dayjs().isBefore(dayjs(course.start_datetime)) ? (
+                                    registrationsCount < courseCapacity ? (
                                         <button
                                             onClick={handleRegister}
                                             className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-lg shadow-sm transition-all duration-150"
@@ -68,8 +77,8 @@ export default function CourseFullInfo({auth, languages, course, registrationsCo
                                             disabled
                                             className="inline-flex items-center gap-2 bg-gray-300 text-gray-600 font-medium px-4 py-2 rounded-lg shadow-sm cursor-not-allowed"
                                         >
-                                            <CalendarX className="w-5 h-5"/>
-                                            Курс начался
+                                            <Lock className="w-5 h-5"/>
+                                            Мест нет
                                         </button>
                                     )
                                 ) : (
@@ -77,8 +86,8 @@ export default function CourseFullInfo({auth, languages, course, registrationsCo
                                         disabled
                                         className="inline-flex items-center gap-2 bg-gray-300 text-gray-600 font-medium px-4 py-2 rounded-lg shadow-sm cursor-not-allowed"
                                     >
-                                        <Lock className="w-5 h-5"/>
-                                        Мест нет
+                                        <CalendarX className="w-5 h-5"/>
+                                        Курс начался
                                     </button>
                                 )}
                             </div>

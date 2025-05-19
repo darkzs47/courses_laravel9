@@ -5,7 +5,7 @@ import {AuthProvider} from "@/Context/AuthContext";
 import LanguageProvider from "@/Providers/LanguageProvider";
 import {Head} from "@inertiajs/react";
 import dayjs from 'dayjs';
-import CourseCard from "@/Layouts/CourseCard";
+import CourseCard from "@/Components/CourseCard";
 
 export default function CoursesByLanguage({auth, languages, coursesByLanguage, currentLanguage}) {
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\Registration;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use App\Http\Requests\CourseRequest;
@@ -46,13 +47,17 @@ class CourseController extends Controller
 
     public function ShowCourse($id)
     {
+        $user = auth()->id();
+
         $course = Course::where('id', $id)->first();
         $registrationsCount = Registration::where('course_id', $id)->count();
+        $registerExists = Registration::where('user_id', $user)->where('course_id', $id)->exists();
         $languages = Language::all();
         return Inertia::render('CourseFullInfo', [
             'course' => $course,
             'languages' => $languages,
             'registrationsCount' => $registrationsCount,
+            'registerExists' => $registerExists,
         ]);
     }
 

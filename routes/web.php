@@ -27,30 +27,43 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', [CourseController::class, 'ShowAdmin'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'role:admin'])->group(function () {
 
-Route::get('/add/course', [CourseController::class, 'ShowFormAddCourse'])->name('add.course');
-Route::post('/add/course', [CourseController::class, 'Store'])->name('courses.store');
+    Route::get('/add/course', [CourseController::class, 'ShowFormAddCourse'])
+        ->name('add.course');
 
-Route::get('/courses/language/{id}', [CourseController::class, 'ShowCoursesByLanguage'])->name('courses.byLanguage');
-Route::get('/course/{id}', [CourseController::class, 'ShowCourse'])->name('course.show');
+    Route::post('/add/course', [CourseController::class, 'Store'])
+        ->name('courses.store');
 
-Route::post('/courses/{courseId}/register/{userId}', [RegistrationController::class, 'Store'])
-    ->name('courses.register');
+    Route::get('/registrations/{id?}', [RegistrationController::class, 'ShowAllRegistrations'])
+        ->name('admin.registrations');
 
-Route::get('/user/registrations', [RegistrationController::class, 'ShowUserRegistrations'])
-    ->name('user.registrations');
+    Route::delete('/registrations/{id}/cancel', [RegistrationController::class, 'Cancel'])
+        ->name('registration.cancel');
 
-Route::get('/registrations/{id?}', [RegistrationController::class, 'ShowAllRegistrations'])->name('admin.registrations');
+    Route::delete('/registrations/{id}/delete', [RegistrationController::class, 'Delete'])
+        ->name('registration.delete');
 
-Route::delete('/registrations/{id}/cancel', [RegistrationController::class, 'Cancel'])
-    ->name('registration.cancel');
-Route::delete('/registrations/{id}/delete', [RegistrationController::class, 'Delete'])
-    ->name('registration.delete');
+    Route::delete('/course/{id}', [CourseController::class, 'Destroy'])->name('course.destroy');
+});
 
-Route::delete('/course/{id}', [CourseController::class, 'Destroy'])->name('course.destroy');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'role:user,admin'])->group(function () {
+
+    Route::get('/dashboard', [CourseController::class, 'ShowAdmin'])->middleware(['auth', 'verified'])
+        ->name('dashboard');
+
+    Route::get('/courses/language/{id}', [CourseController::class, 'ShowCoursesByLanguage'])
+        ->name('courses.byLanguage');
+
+    Route::get('/course/{id}', [CourseController::class, 'ShowCourse'])->name('course.show');
+
+    Route::post('/courses/{courseId}/register/{userId}', [RegistrationController::class, 'Store'])
+        ->name('courses.register');
+
+    Route::get('/user/registrations', [RegistrationController::class, 'ShowUserRegistrations'])
+        ->name('user.registrations');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

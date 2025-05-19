@@ -7,7 +7,7 @@ function classNames(...classes) {
 
 const CourseFilters = ({ currentFilter, onFilterChange }) => {
     const filters = [
-        { key: 'active', label: 'Активные курсы' },
+        { key: 'active', label: 'Доступные курсы' },
         { key: 'completed', label: 'Начатые курсы' },
         { key: 'noSpaces', label: 'Без мест' }
     ];
