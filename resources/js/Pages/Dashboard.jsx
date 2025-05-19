@@ -3,6 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head} from '@inertiajs/react';
 import {AuthProvider} from "@/Context/AuthContext";
 import LanguageProvider from "@/Providers/LanguageProvider";
+import FlashMessageModal from "@/Layouts/FlashMessageModal";
 
 export default function Dashboard( {auth, languages, courses } ) {
     return (
@@ -14,6 +15,7 @@ export default function Dashboard( {auth, languages, courses } ) {
                     courses={courses}
                 >
                 </AuthenticatedLayout>
+                <FlashMessageModal/>
             </LanguageProvider>
         </AuthProvider>
     );
